@@ -11,9 +11,9 @@ QT_END_NAMESPACE
 class Calculator : public QMainWindow
 {
     Q_OBJECT
-    QString lnum=NULL;
-    QString rnum=NULL;
-    QString cal=NULL;
+    QString lnum=NULL; // 이전 숫자
+    QString rnum=NULL;  // 다음 숫자
+    QString cal=NULL; //사칙연산
     int lnumber;
     int rnumber;
 

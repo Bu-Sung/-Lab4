@@ -11,6 +11,7 @@ Calculator::Calculator(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Calculator)
 {
+    /*버튼 사이즈 조절*/
     ui->setupUi(this);
     ui->btn0->setFixedSize(80,80);
     ui->btn1->setFixedSize(80,80);
@@ -27,7 +28,7 @@ Calculator::Calculator(QWidget *parent)
     ui->btnmu->setFixedSize(80,80);
     ui->btnd->setFixedSize(80,80);
     ui->btne->setFixedSize(80,80);
-
+   /*버튼 coonect*/
     connect(ui->btn0, SIGNAL(clicked()), this, SLOT(numClicked()));
     connect(ui->btn1, SIGNAL(clicked()), this, SLOT(numClicked()));
     connect(ui->btn2, SIGNAL(clicked()), this, SLOT(numClicked()));
@@ -39,11 +40,11 @@ Calculator::Calculator(QWidget *parent)
     connect(ui->btn8, SIGNAL(clicked()), this, SLOT(numClicked()));
     connect(ui->btn9, SIGNAL(clicked()), this, SLOT(numClicked()));
 
-    connect(ui->btnp, SIGNAL(clicked()), this, SLOT(calClicked()));
-    connect(ui->btnmi, SIGNAL(clicked()), this, SLOT(calClicked()));
-    connect(ui->btnmu, SIGNAL(clicked()), this, SLOT(calClicked()));
-    connect(ui->btnd, SIGNAL(clicked()), this, SLOT(calClicked()));
-    connect(ui->btne, SIGNAL(clicked()), this, SLOT(calClicked()));
+    connect(ui->btnp, SIGNAL(clicked()), this, SLOT(calClicked())); //더하기
+    connect(ui->btnmi, SIGNAL(clicked()), this, SLOT(calClicked())); //빼기
+    connect(ui->btnmu, SIGNAL(clicked()), this, SLOT(calClicked())); //곱하기
+    connect(ui->btnd, SIGNAL(clicked()), this, SLOT(calClicked())); //나누기
+    connect(ui->btne, SIGNAL(clicked()), this, SLOT(calClicked())); //연산하기
 }
 
 Calculator::~Calculator()
@@ -51,9 +52,9 @@ Calculator::~Calculator()
     delete ui;
 }
 
-void Calculator::calClicked(){
-    QObject *obj = sender();
-    if(lnum.length()==0){
+void Calculator::calClicked(){ //사칙연산 가져오기
+    QObject *obj = sender(); //클린된 버튼이 무엇인지
+    if(lnum.length()==0){ //왼쪽 숫자 없으면 사칙연산 적용 X
 
     }else{
         if( obj == ui->btnp){
@@ -66,7 +67,7 @@ void Calculator::calClicked(){
             cal = "/";
         }else if(obj == ui->btne){
             int a;
-            if(cal.at(0) == '+'){
+            if(cal.at(0) == '+'){ //연산후 출력
                a = lnumber + rnumber;
             }else if(cal.at(0) == '-'){
                a = lnumber - rnumber;
@@ -83,10 +84,10 @@ void Calculator::calClicked(){
         ui->preview->setText(lnum+cal);
     }
 }
-void Calculator::numClicked()
+void Calculator::numClicked() //어떤 숫자가 눌렸는지
 {
     QObject *obj = sender();
-    if(!lnum.isNull() && !cal.isNull()){
+    if(!lnum.isNull() && !cal.isNull()){// 왼쪽 숫자와 사칙연산이 둘다 비어있지 않으면 오른쪽 숫자 입력
         if(obj == ui->btn0){
             rnum = rnum + "0";
         }else if(obj == ui->btn1){
@@ -110,7 +111,7 @@ void Calculator::numClicked()
         }
         ui->result->setText(rnum);
         rnumber = rnum.toInt();
-    }else{
+    }else{                      //왼쪽 숫자 입력
         if(obj == ui->btn0){
              lnum = lnum + "0";
         }else if(obj == ui->btn1){
